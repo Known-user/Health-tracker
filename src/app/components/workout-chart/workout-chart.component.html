@@ -1,14 +1,19 @@
-<div class="bg-gray-100 p-6 rounded-lg shadow-lg max-w-md mx-auto mt-8">
-  <h2 class="text-2xl font-semibold mb-4">Workout Progress</h2>
+<div class="bg-white p-8 rounded-lg shadow-2xl max-w-xl mx-auto mt-8">
+  <h2 class="text-3xl font-extrabold text-center text-blue-600 mb-6">Workout Progress</h2>
 
   <!-- User selection dropdown -->
-  <div class="mb-4">
-    <label for="userSelect" class="block text-lg font-medium mb-2">Select User:</label>
-    <select id="userSelect" class="w-full p-2 border border-gray-300 rounded-lg" (change)="onUserSelect($event)">
-      <option *ngFor="let user of users" [value]="user.id" [selected]="user.id === selectedUser?.id">{{ user.name }}</option>
+  <div class="mb-6">
+    <label for="userSelect" class="block text-lg font-semibold text-gray-700 mb-2">Select User:</label>
+    <select id="userSelect" class="w-full p-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
+      (change)="onUserSelect($event)">
+      <option *ngFor="let user of users" [value]="user.id" [selected]="user.id === selectedUser?.id">
+        {{ user.name }}
+      </option>
     </select>
   </div>
 
   <!-- Chart -->
-  <canvas #workoutChart></canvas>
+  <div class="relative mt-12">
+    <canvas #workoutChart class="w-full h-72 rounded-lg bg-gray-50 shadow-md"></canvas>
+  </div>
 </div>

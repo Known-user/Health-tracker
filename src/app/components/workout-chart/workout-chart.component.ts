@@ -38,7 +38,6 @@ export class WorkoutChartComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     // Fetch users from WorkoutService
     this.users = this.workoutService.getUsers();
-    console.log('Users fetched:', this.users);  
     // Check if there are users available, and set default selected user to the first user
     if (this.users.length > 0) {
       this.selectedUser = this.users[0];

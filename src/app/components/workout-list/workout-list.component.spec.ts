@@ -1,38 +1,23 @@
-import { Component, OnInit } from '@angular/core';
-import { WorkoutService } from '../../services/workout.service';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-@Component({
-  selector: 'app-workout-list',
-  templateUrl: './workout-list.component.html',
-  styles:``,
-})
-export class WorkoutListComponent implements OnInit {
-  users: any[] = [];
-  searchQuery = '';
-  filterType = '';
+import {  WorkoutListComponent } from './workout-list.component';
 
-  constructor(private workoutService: WorkoutService) {}
+describe('WorkoutChartComponent', () => {
+  let component: WorkoutListComponent;
+  let fixture: ComponentFixture<WorkoutListComponent>;
 
-  ngOnInit() {
-    this.loadUsers();
-  }
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [WorkoutListComponent]
+    })
+    .compileComponents();
 
-  loadUsers() {
-    this.users = this.workoutService.getUsers();
-  }
+    fixture = TestBed.createComponent(WorkoutListComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
 
-  searchUsers() {
-    this.users = this.workoutService.getUsers().filter(u => u.name.includes(this.searchQuery));
-  }
-
-  filterWorkouts() {
-    if (this.filterType) {
-      this.users = this.workoutService.getUsers().map(user => ({
-        ...user,
-        workouts: user.workouts.filter((w: any) => w.type === this.filterType)
-      })).filter(user => user.workouts.length);
-    } else {
-      this.loadUsers();
-    }
-  }
-}
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+});
