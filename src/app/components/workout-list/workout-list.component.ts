@@ -17,30 +17,41 @@ export class WorkoutListComponent implements OnInit {
   currentPage = 1;
   usersPerPage = 5;
   totalPages = 0;
-
+  smallNames: string[] = [];
   
   constructor(private workoutService: WorkoutService) {}
+ 
   
   ngOnInit() {
-    console.log('ngOnInit triggered');
     this.loadUsers();
+    this.smallNames = this.workoutService.getUsers().map(user => user.name.toLowerCase());
   }
   
   loadUsers() {
-    console.log('loadUsers triggered');
     this.users = this.workoutService.getUsers();
+    this.calculateTotalPages();
+  }
+  
+  calculateTotalPages() {
     this.totalPages = Math.ceil(this.users.length / this.usersPerPage);
-    console.log('Users loaded:', this.users);
   }
 
   // Search functionality: Search by name and workout type
   searchUsers() {
-    this.users = this.workoutService.getUsers().filter(u => u.name.includes(this.searchQuery) || 
-      u.workouts.some((w: any) => w.type.toLowerCase().includes(this.searchQuery.toLowerCase())));
+    const query = this.searchQuery.toLowerCase().trim();
+    this.currentPage = 1;
+  
+    const users = this.workoutService.getUsers();
+    this.users = users.filter((u, index) => 
+      this.smallNames[index].includes(query) || 
+      u.workouts.some((w: any) => w.type.toLowerCase().includes(query))
+    );
+    this.calculateTotalPages();
   }
-
+  
   // Filter workouts by workout type
   filterWorkouts() {
+    this.currentPage = 1;
     if (this.filterType) {
       this.users = this.workoutService.getUsers()
         .map(user => ({
@@ -51,6 +62,18 @@ export class WorkoutListComponent implements OnInit {
     } else {
       this.loadUsers();
     }
+    this.calculateTotalPages();
+  }
+
+  // Ensure usersPerPage stays within limits
+  updateUsersPerPage() {
+    if (this.usersPerPage < 1) {
+      this.usersPerPage = 1;
+    } else if (this.usersPerPage > 50) {
+      this.usersPerPage = 50;
+    }
+    this.currentPage = 1;
+    this.calculateTotalPages();
   }
 
   // Paginate users list

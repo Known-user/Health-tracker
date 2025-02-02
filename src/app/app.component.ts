@@ -69,11 +69,15 @@ export class AppComponent {
       },
     ];
 
-    // Adding workouts for each user
-    userData.forEach((user) => {
-      user.workouts.forEach((workout) => {
-        this.workoutService.addUserWorkout(user.name, workout.type, workout.minutes);
+    const users = this.workoutService.getUsers()
+
+    if (users.length === 0) {
+      // Adding workouts for each user
+      userData.forEach((user) => {
+        user.workouts.forEach((workout) => {
+          this.workoutService.addUserWorkout(user.name, workout.type, workout.minutes);
+        });
       });
-    });
+    }
   }
 }

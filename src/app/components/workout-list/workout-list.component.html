@@ -1,74 +1,79 @@
 <div class="bg-gray-100 p-6 rounded-lg shadow-lg max-w-3xl mx-auto mt-8">
-    <div class="flex justify-between mb-4">
-      <!-- Search by name or workout type -->
-      <input
-        type="text"
-        placeholder="Search by name or workout type"
-        class="w-1/2 p-2 border border-gray-300 rounded-md"
-        [(ngModel)]="searchQuery"
-        (input)="searchUsers()"
-      />
-      <!-- Filter by workout type -->
-      <select
-        class="p-2 border border-gray-300 rounded-md"
-        [(ngModel)]="filterType"
-        (change)="filterWorkouts()"
-      >
-        <option value="">Filter by workout type</option>
-        <option value="Running">Running</option>
-        <option value="Cycling">Cycling</option>
-        <option value="Swimming">Swimming</option>
-        <option value="Yoga">Yoga</option>
-      </select>
-    </div>
-  
-    <!-- Workout Table -->
-    <table class="min-w-full table-auto">
-      <thead>
-        <tr>
-          <th class="border p-2">Name</th>
-          <th class="border p-2">Workout</th>
-          <th class="border p-2">Minutes</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let user of paginate()">
-          <td class="border p-2">{{ user.name }}</td>
-          <td class="border p-2">
-            <ul>
-              <li *ngFor="let workout of user.workouts">
-                {{ workout.type }}
-              </li>
-            </ul>
-          </td>
-          <td class="border p-2">
-            <ul>
-              <li *ngFor="let workout of user.workouts">
-                {{ workout.minutes }} mins
-              </li>
-            </ul>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  
-    <!-- Pagination Controls -->
-    <div class="flex justify-between mt-4">
-      <button
-        (click)="currentPage = currentPage - 1"
-        [disabled]="currentPage === 1"
-        class="p-2 bg-blue-600 text-white rounded-md"
-      >
+  <div class="flex justify-between mb-4">
+    <!-- Search by name or workout type -->
+    <input type="text" placeholder="Search by name or workout type" class="w-1/2 p-2 border border-gray-300 rounded-md"
+      [(ngModel)]="searchQuery" (input)="searchUsers()" />
+    <!-- Filter by workout type -->
+    <!-- <div class="flex items-center justify-center "> -->
+
+
+    <select class="p-2 border border-gray-300 rounded-md" [(ngModel)]="filterType" (change)="filterWorkouts()">
+      <option value="">Filter by workout type</option>
+      <option value="Running">Running</option>
+      <option value="Cycling">Cycling</option>
+      <option value="Swimming">Swimming</option>
+      <option value="Yoga">Yoga</option>
+    </select>
+    <!-- </div> -->
+  </div>
+
+
+  <!-- Workout Table -->
+  <table class="min-w-full table-auto">
+    <thead>
+      <tr>
+        <th class="border p-2">Name</th>
+        <th class="border p-2">Workout</th>
+        <th class="border p-2">Number of Workouts</th>
+        <th class="border p-2">Minutes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of paginate()">
+        <td class="border p-2">{{ user.name }}</td>
+        <td class="border p-2">
+          <ul>
+            <li *ngFor="let workout of user.workouts">
+              {{ workout.type }}
+            </li>
+          </ul>
+        </td>
+        <td class="border p-2">
+          <ul>
+            <li>
+              {{ user.workouts.length }}
+            </li>
+          </ul>
+        </td>
+        <td class="border p-2">
+          <ul>
+            <li *ngFor="let workout of user.workouts">
+              {{ workout.minutes }} mins
+            </li>
+          </ul>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Pagination Controls -->
+  <div class=" flex justify-between mt-4">
+    <div class="w-fit flex justify-between items-center mt-4">
+      <button (click)="currentPage = currentPage - 1" [disabled]="currentPage === 1"
+        class="p-2 bg-blue-600 text-white rounded-md">
         Previous
       </button>
       <div>{{ currentPage }} / {{ totalPages }}</div>
-      <button
-        (click)="currentPage = currentPage + 1"
-        [disabled]="(currentPage * usersPerPage) >= users.length"
-        class="p-2 bg-blue-600 text-white rounded-md"
-      >
+      <button (click)="currentPage = currentPage + 1" [disabled]="(currentPage * usersPerPage) >= users.length"
+        class="p-2 bg-blue-600 text-white rounded-md">
         Next
       </button>
     </div>
+    <!-- Items Per Page Input -->
+    <div class="flex items-center justify-between">
+      <label for="itemsPerPage" class="whitespace-nowrap">Items per page: </label>
+      <input id="itemsPerPage" type="number" min="1" max="50" class="w-16 p-2 border border-gray-300 rounded-md"
+        [(ngModel)]="usersPerPage" (change)="updateUsersPerPage()" />
+    </div>
   </div>
-  
+</div>
