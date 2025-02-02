@@ -1,0 +1,54 @@
+<div class="bg-gray-100 p-6 rounded-lg shadow-lg max-w-md mx-auto">
+    <h2 class="text-2xl font-semibold mb-4">Log Your Workout</h2>
+  
+    <!-- Success Message -->
+    <div *ngIf="successMessage" class="bg-green-500 text-white p-3 rounded-md mb-4">
+      {{ successMessage }}
+    </div>
+  
+    <!-- User Name Input -->
+    <input
+      type="text"
+      class="w-full p-2 border border-gray-300 rounded-md mb-4"
+      placeholder="Enter your name"
+      [(ngModel)]="name"
+      required
+    />
+  
+    <!-- Workout Type Selection -->
+    <div class="mb-4">
+      <h3 class="text-lg font-semibold mb-2">Select Workout Type</h3>
+      <div *ngFor="let workoutType of workoutTypes">
+        <input
+          type="checkbox"
+          [(ngModel)]="selectedWorkoutTypes[workoutType]"
+          [ngModelOptions]="{ standalone: true }"
+          class="mr-2"
+          required
+        />
+        {{ workoutType }}
+      </div>
+    </div>
+  
+    <!-- Workout Minutes Input for each selected workout type -->
+    <div *ngFor="let workoutType of workoutTypes">
+      <div *ngIf="selectedWorkoutTypes[workoutType]">
+        <input
+          type="number"
+          class="w-full p-2 border border-gray-300 rounded-md mb-4"
+          placeholder="Enter workout minutes for {{ workoutType }}"
+          [(ngModel)]="minutes[workoutType]"
+          required
+        />
+      </div>
+    </div>
+  
+    <!-- Add Workout Button -->
+    <button
+      (click)="addWorkout()"
+      class="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700"
+    >
+      Add Workout
+    </button>
+  </div>
+  

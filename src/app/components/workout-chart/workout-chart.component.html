@@ -1,0 +1,14 @@
+<div class="bg-gray-100 p-6 rounded-lg shadow-lg max-w-md mx-auto mt-8">
+  <h2 class="text-2xl font-semibold mb-4">Workout Progress</h2>
+
+  <!-- User selection dropdown -->
+  <div class="mb-4">
+    <label for="userSelect" class="block text-lg font-medium mb-2">Select User:</label>
+    <select id="userSelect" class="w-full p-2 border border-gray-300 rounded-lg" (change)="onUserSelect($event)">
+      <option *ngFor="let user of users" [value]="user.id" [selected]="user.id === selectedUser?.id">{{ user.name }}</option>
+    </select>
+  </div>
+
+  <!-- Chart -->
+  <canvas #workoutChart></canvas>
+</div>
